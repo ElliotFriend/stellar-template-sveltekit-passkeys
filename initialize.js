@@ -94,7 +94,7 @@ function importContract({ id, alias }) {
         `import { PUBLIC_STELLAR_RPC_URL } from '$env/static/public';\n\n` +
         `export default new Client.Client({\n` +
         `    ...Client.networks.${process.env.STELLAR_NETWORK},\n` +
-        `    rpcUrl: RPC_URL,\n` +
+        `    rpcUrl: PUBLIC_STELLAR_RPC_URL,\n` +
         `});\n`;
 
     const outputPath = `${outputDir}/${alias}.ts`;

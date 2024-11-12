@@ -1,45 +1,45 @@
 <script lang="ts">
-    import { getToastStore } from '@skeletonlabs/skeleton'
+    import { getToastStore } from '@skeletonlabs/skeleton';
     const toastStore = getToastStore();
 
-    import { error } from '@sveltejs/kit'
+    import { error } from '@sveltejs/kit';
 
     async function signup() {
-        console.log('signing up')
+        console.log('signing up');
         try {
             // Implement the signup logic here
         } catch (err) {
-            console.error(err)
+            console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong signing up. Please try again later.',
-                background: 'variant-filled-error'
-            })
+                background: 'variant-filled-error',
+            });
         }
     }
 
     async function login() {
-        console.log('logging in')
+        console.log('logging in');
         try {
             // Implement the login logic here
         } catch (err) {
-            console.error(err)
+            console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong logging in. Please try again later.',
-                background: 'variant-filled-error'
-            })
+                background: 'variant-filled-error',
+            });
         }
     }
 
     async function logout() {
-        console.log('logging out')
+        console.log('logging out');
         try {
             // Implement the logout logic here
         } catch (err) {
-            console.error(err)
+            console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong logging out. Please try again later.',
-                background: 'variant-filled-error'
-            })
+                background: 'variant-filled-error',
+            });
         }
     }
 </script>

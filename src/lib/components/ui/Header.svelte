@@ -2,7 +2,7 @@
     /**
      * Change these menu items to fit whatever your use-case is.
      */
-     export const menuItems = [
+    export const menuItems = [
         {
             name: 'Apple',
             href: '#',
@@ -18,14 +18,14 @@
             href: '#',
             icon: Castle,
         },
-    ]
+    ];
 </script>
 
 <script lang="ts">
-    import { getDrawerStore } from '@skeletonlabs/skeleton'
+    import { getDrawerStore } from '@skeletonlabs/skeleton';
     const drawerStore = getDrawerStore();
 
-    import Menu from 'lucide-svelte/icons/menu'
+    import Menu from 'lucide-svelte/icons/menu';
     import Apple from 'lucide-svelte/icons/apple';
     import Book from 'lucide-svelte/icons/book';
     import Castle from 'lucide-svelte/icons/castle';
@@ -43,10 +43,7 @@
             </div>
             <div class="flex-none flex items-center">
                 <a href="/" title="Dapp homepage">
-                    <span class="text-lg md:text-xl">
-                        Dapp Title
-                    </span
-                    >
+                    <span class="text-lg md:text-xl"> Dapp Title </span>
                 </a>
             </div>
             <div class="hidden lg:block flex lg:space-x-4">
