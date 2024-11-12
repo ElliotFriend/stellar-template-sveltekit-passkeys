@@ -49,9 +49,9 @@
     },
     "type": "module",
     "dependencies": {
-        "@stellar/stellar-sdk": "13.0.0-rc.1",
+        "@stellar/stellar-sdk": "13.0.0-beta.1",
         "hello_world": "file:./packages/hello_world",
-        "passkey-kit": "~0.9.4",
+        "passkey-kit": "^0.10.1",
         "svelte-persisted-store": "^0.12.0"
     },
     "pnpm": {

@@ -5,7 +5,7 @@ export const load: PageLoad = async () => {
     const { result } = await hello_world.hello({
         to: 'SvelteKit Passkeys',
     });
-    console.log('result', result);
+
     return {
         greeting: result,
     };
