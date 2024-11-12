@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@stellar/stellar-sdk': 13.0.0-rc.1
+
 importers:
 
   .:
@@ -11,6 +14,9 @@ importers:
       '@stellar/stellar-sdk':
         specifier: 13.0.0-rc.1
         version: 13.0.0-rc.1
+      hello_world:
+        specifier: file:./packages/hello_world
+        version: file:packages/hello_world
       passkey-kit:
         specifier: ~0.9.4
         version: 0.9.4
@@ -466,20 +472,8 @@ packages:
   '@stellar/js-xdr@3.1.2':
     resolution: {integrity: sha512-VVolPL5goVEIsvuGqDc5uiKxV03lzfWdvYg1KikvwheDmTBO68CKDji3bAZ/kppZrx5iTA8z3Ld5yuytcvhvOQ==}
 
-  '@stellar/stellar-base@12.1.1':
-    resolution: {integrity: sha512-gOBSOFDepihslcInlqnxKZdIW9dMUO1tpOm3AtJR33K2OvpXG6SaVHCzAmCFArcCqI9zXTEiSoh70T48TmiHJA==}
-
   '@stellar/stellar-base@13.0.0':
     resolution: {integrity: sha512-zS/F1P2MfvgoIlUxOM3PMAEm76qoP5N7HYiww6y6EMP+j3brVFTnTIlJuYdnRdVaPXC/Z4BpojG3bVyhs32Tiw==}
-
-  '@stellar/stellar-base@13.0.0-beta.1':
-    resolution: {integrity: sha512-S5c2FyKwUOc28/3sDoOfPIcdzcbUyfiYRmcUlscZrEX/VVzV12216XRkdWy2MYa8KQNK60MpR7wrGp2MamvVGg==}
-
-  '@stellar/stellar-sdk@12.3.0':
-    resolution: {integrity: sha512-F2DYFop/M5ffXF0lvV5Ezjk+VWNKg0QDX8gNhwehVU3y5LYA3WAY6VcCarMGPaG9Wdgoeh1IXXzOautpqpsltw==}
-
-  '@stellar/stellar-sdk@13.0.0-beta.1':
-    resolution: {integrity: sha512-yJN2HzibhZFJsdLRU83bkUwb9dq1sZRRiQptTJyunVv0hQsF+tTldrP3hHst3LROv/2GWTn20tmAqnp0hkzOhg==}
 
   '@stellar/stellar-sdk@13.0.0-rc.1':
     resolution: {integrity: sha512-a173pQPCuS8/xVET/euwp8UWEFsE68KGF21Xcq46TluDGIq0fKVmJ6mw1LAS2uEOE757rrY24KNGAux4FXR64g==}
@@ -1094,6 +1088,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hello_world@file:packages/hello_world:
+    resolution: {directory: packages/hello_world, type: directory}
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -2100,17 +2097,6 @@ snapshots:
 
   '@stellar/js-xdr@3.1.2': {}
 
-  '@stellar/stellar-base@12.1.1':
-    dependencies:
-      '@stellar/js-xdr': 3.1.2
-      base32.js: 0.1.0
-      bignumber.js: 9.1.2
-      buffer: 6.0.3
-      sha.js: 2.4.11
-      tweetnacl: 1.0.3
-    optionalDependencies:
-      sodium-native: 4.3.0
-
   '@stellar/stellar-base@13.0.0':
     dependencies:
       '@stellar/js-xdr': 3.1.2
@@ -2121,42 +2107,6 @@ snapshots:
       tweetnacl: 1.0.3
     optionalDependencies:
       sodium-native: 4.3.0
-
-  '@stellar/stellar-base@13.0.0-beta.1':
-    dependencies:
-      '@stellar/js-xdr': 3.1.2
-      base32.js: 0.1.0
-      bignumber.js: 9.1.2
-      buffer: 6.0.3
-      sha.js: 2.4.11
-      tweetnacl: 1.0.3
-    optionalDependencies:
-      sodium-native: 4.3.0
-
-  '@stellar/stellar-sdk@12.3.0':
-    dependencies:
-      '@stellar/stellar-base': 12.1.1
-      axios: 1.7.7
-      bignumber.js: 9.1.2
-      eventsource: 2.0.2
-      randombytes: 2.1.0
-      toml: 3.0.0
-      urijs: 1.19.11
-    transitivePeerDependencies:
-      - debug
-
-  '@stellar/stellar-sdk@13.0.0-beta.1':
-    dependencies:
-      '@stellar/stellar-base': 13.0.0-beta.1
-      axios: 1.7.7
-      bignumber.js: 9.1.2
-      eventsource: 2.0.2
-      feaxios: 0.0.20
-      randombytes: 2.1.0
-      toml: 3.0.0
-      urijs: 1.19.11
-    transitivePeerDependencies:
-      - debug
 
   '@stellar/stellar-sdk@13.0.0-rc.1':
     dependencies:
@@ -2836,6 +2786,13 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  hello_world@file:packages/hello_world:
+    dependencies:
+      '@stellar/stellar-sdk': 13.0.0-rc.1
+      buffer: 6.0.3
+    transitivePeerDependencies:
+      - debug
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -3038,14 +2995,14 @@ snapshots:
 
   passkey-factory-sdk@0.4.1:
     dependencies:
-      '@stellar/stellar-sdk': 12.3.0
+      '@stellar/stellar-sdk': 13.0.0-rc.1
       buffer: 6.0.3
     transitivePeerDependencies:
       - debug
 
   passkey-kit-sdk@0.4.1:
     dependencies:
-      '@stellar/stellar-sdk': 12.3.0
+      '@stellar/stellar-sdk': 13.0.0-rc.1
       buffer: 6.0.3
     transitivePeerDependencies:
       - debug
@@ -3053,7 +3010,7 @@ snapshots:
   passkey-kit@0.9.4:
     dependencies:
       '@simplewebauthn/browser': 10.0.0
-      '@stellar/stellar-sdk': 13.0.0-beta.1
+      '@stellar/stellar-sdk': 13.0.0-rc.1
       base64url: 3.0.1
       buffer: 6.0.3
       passkey-factory-sdk: 0.4.1
@@ -3236,7 +3193,7 @@ snapshots:
 
   sac-sdk@0.2.1:
     dependencies:
-      '@stellar/stellar-sdk': 12.3.0
+      '@stellar/stellar-sdk': 13.0.0-rc.1
       buffer: 6.0.3
     transitivePeerDependencies:
       - debug
