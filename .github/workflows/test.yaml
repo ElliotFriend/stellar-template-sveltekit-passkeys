@@ -5,6 +5,9 @@ on:
         branches: [main]
     pull_request:
 
+env:
+    PUBLIC_STELLAR_RPC_URL: 'https://soroban-testnet.stellar.org'
+
 jobs:
     build_and_test:
         runs-on: ubuntu-latest
