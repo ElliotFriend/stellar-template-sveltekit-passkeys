@@ -7,7 +7,7 @@ on:
 
 jobs:
     build_and_test:
-        runs-on: ubunut-latest
+        runs-on: ubuntu-latest
 
         strategy:
             fail-fast: false
