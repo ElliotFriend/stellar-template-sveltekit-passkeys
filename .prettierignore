@@ -3,3 +3,4 @@ pnpm-lock.yaml
 
 # ignore test results
 test-results/.last-run.json
+contracts/**/test_snapshots

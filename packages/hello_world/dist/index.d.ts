@@ -3,10 +3,13 @@ import {
     Client as ContractClient,
     ClientOptions as ContractClientOptions,
 } from '@stellar/stellar-sdk/contract';
+export * from '@stellar/stellar-sdk';
+export * as contract from '@stellar/stellar-sdk/contract';
+export * as rpc from '@stellar/stellar-sdk/rpc';
 export declare const networks: {
     readonly testnet: {
         readonly networkPassphrase: 'Test SDF Network ; September 2015';
-        readonly contractId: 'CD4FJDLBYZO5VZZWBUEN5YZIIOGTGOJ5DCTGZZQLYZG7A5XT7BKIUO6U';
+        readonly contractId: 'CBC3TQTYAFFWN5DI4YRP5GWLZJU2RSWNXRKDJNTYMK6O4E2GT245PE7T';
     };
 };
 export declare const Errors: {};

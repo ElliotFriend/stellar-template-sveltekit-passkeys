@@ -35,9 +35,13 @@ function exe(command) {
  * Generates a new keypair, and funds it if we're not using Mainnet.
  */
 function fundAll() {
-    exe(`stellar keys generate ${process.env.STELLAR_ACCOUNT}`);
-    if (process.env.STELLAR_NETWORK_PASSPHRASE !== 'Public Global Stellar Network ; September 2015') {
-        exe(`stellar keys fund ${process.env.STELLAR_ACCOUNT} --network ${process.env.STELLAR_NETWORK}`)
+    exe(`stellar keys generate --overwrite --fund ${process.env.STELLAR_ACCOUNT}`);
+    if (
+        process.env.STELLAR_NETWORK_PASSPHRASE !== 'Public Global Stellar Network ; September 2015'
+    ) {
+        exe(
+            `stellar keys fund ${process.env.STELLAR_ACCOUNT} --network ${process.env.STELLAR_NETWORK}`,
+        );
     }
 }
 
@@ -105,19 +109,21 @@ function contracts() {
     // search for all deployed contracts
     const contractFiles = glob(`${dirname}/.stellar/contract-ids/*.json`);
 
-    return contractFiles
-        // start by mapping the found files, adding an alias to the object
-        .map((path) => ({
-            alias: filenameNoExtension(path),
-            ...JSON.parse(readFileSync(path)),
-        }))
-        // only grab contracts for the network we want
-        .filter((data) => data.ids[process.env.STELLAR_NETWORK_PASSPHRASE])
-        // add the contract address to the return object
-        .map((data) => ({
-            alias: data.alias,
-            id: data.ids[process.env.STELLAR_NETWORK_PASSPHRASE],
-        }));
+    return (
+        contractFiles
+            // start by mapping the found files, adding an alias to the object
+            .map((path) => ({
+                alias: filenameNoExtension(path),
+                ...JSON.parse(readFileSync(path)),
+            }))
+            // only grab contracts for the network we want
+            .filter((data) => data.ids[process.env.STELLAR_NETWORK_PASSPHRASE])
+            // add the contract address to the return object
+            .map((data) => ({
+                alias: data.alias,
+                id: data.ids[process.env.STELLAR_NETWORK_PASSPHRASE],
+            }))
+    );
 }
 
 /**
@@ -129,6 +135,8 @@ function bind({ alias, id }) {
     exe(
         `stellar contract bindings typescript --id ${id} --output-dir ${dirname}/packages/${alias} --overwrite`,
     );
+
+    exe(`cd packages/${alias} && pnpm install && pnpm run build && cd ../..`);
 }
 
 /**
