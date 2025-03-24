@@ -6,7 +6,7 @@
 -->
 
 <script lang="ts">
-        const drawerStore = getDrawerStore();
+    const drawerStore = getDrawerStore();
 
     // We import the `menuItems` array that is exported from the `<script
     // module>` part of the Header component. This way, we can have the same

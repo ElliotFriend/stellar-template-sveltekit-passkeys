@@ -1,13 +1,13 @@
 @import 'tailwindcss';
-@import "@skeletonlabs/skeleton";
-@import "@skeletonlabs/skeleton/optional/presets";
-@import "@skeletonlabs/skeleton/themes/rocket";
+
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/optional/presets';
+@import '@skeletonlabs/skeleton/themes/rocket';
+
 @source "../node_modules/@skeletonlabs/skeleton-svelte/dist";
 
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-
-@source '../node_modules/.pnpm/@skeletonlabs+skeleton@2.10.3_svelte@5.10.1/node_modules/@skeletonlabs/skeleton/dist/**/*.{html,js,svelte,ts}';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -20,13 +20,13 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
 }
 
 @layer utilities {
