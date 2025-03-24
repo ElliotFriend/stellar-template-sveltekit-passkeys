@@ -6,8 +6,7 @@
 -->
 
 <script lang="ts">
-    import { getDrawerStore, Drawer } from '@skeletonlabs/skeleton';
-    const drawerStore = getDrawerStore();
+        const drawerStore = getDrawerStore();
 
     // We import the `menuItems` array that is exported from the `<script
     // module>` part of the Header component. This way, we can have the same
@@ -28,7 +27,7 @@
                 {#each menuItems as item}
                     <a
                         href={item.href}
-                        class="btn variant-soft-surface"
+                        class="btn preset-tonal-surface"
                         onclick={() => onClickSidebarItem()}
                     >
                         <span><item.icon /></span>

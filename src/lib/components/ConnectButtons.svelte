@@ -20,7 +20,6 @@
 <script lang="ts">
     // We're using toasts to display errors to the user. We're not doing much
     // error _handling_, though. So, use whatever techniques you see fit.
-    import { getToastStore } from '@skeletonlabs/skeleton';
     const toastStore = getToastStore();
 
     /**
@@ -34,7 +33,7 @@
             console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong signing up. Please try again later.',
-                background: 'variant-filled-error',
+                background: 'preset-filled-error-500',
             });
         }
     }
@@ -50,7 +49,7 @@
             console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong logging in. Please try again later.',
-                background: 'variant-filled-error',
+                background: 'preset-filled-error-500',
             });
         }
     }
@@ -66,14 +65,14 @@
             console.error(err);
             toastStore.trigger({
                 message: 'Something went wrong logging out. Please try again later.',
-                background: 'variant-filled-error',
+                background: 'preset-filled-error-500',
             });
         }
     }
 </script>
 
 <div class="flex space-x-1 md:space-x-2">
-    <button class="btn variant-filled-primary" onclick={signup}>Signup</button>
-    <button class="btn variant-soft-primary" onclick={login}>Login</button>
-    <button class="btn variant-soft-error" onclick={logout}>Logout</button>
+    <button class="btn preset-filled-primary-500" onclick={signup}>Signup</button>
+    <button class="btn preset-tonal-primary" onclick={login}>Login</button>
+    <button class="btn preset-tonal-error" onclick={logout}>Logout</button>
 </div>

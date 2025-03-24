@@ -1,6 +1,6 @@
 <script lang="ts">
     import '../app.postcss';
-    import { initializeStores, Toast } from '@skeletonlabs/skeleton';
+    import { ToastProvider } from '@skeletonlabs/skeleton-svelte';
     initializeStores();
 
     import Header from '$lib/components/ui/Header.svelte';
@@ -9,7 +9,7 @@
     import Footer from '$lib/components/ui/Footer.svelte';
 </script>
 
-<Toast />
+<ToastProvider />
 <SidebarDrawer />
 
 <div class="w-full h-screen flex flex-col overflow-hidden">

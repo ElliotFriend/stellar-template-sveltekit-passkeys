@@ -42,7 +42,6 @@
     // The "Drawer" is the way Skeleton describes the responsive menu that can
     // appear on the side of the page for smaller screens (when the header
     // "hamburger button" is clicked).
-    import { getDrawerStore } from '@skeletonlabs/skeleton';
     const drawerStore = getDrawerStore();
 
     // We import the Icons in this manner to give us faster build and load
@@ -57,7 +56,7 @@
 </script>
 
 <header class="flex-none shadow-xl z-5">
-    <div class="flex flex-col bg-surface-100-800-token space-y-4 p-3 md:p-4">
+    <div class="flex flex-col bg-surface-100-900 space-y-4 p-3 md:p-4">
         <div class="grid grid-cols-[auto_1fr_auto] gap-2 md:gap-8">
             <!-- The "hamburger" button will not appear on large screens -->
             <div class="lg:hidden! self-center">
@@ -73,7 +72,7 @@
             <!-- The "topnav" buttons will not appear on medium or smaller screens -->
             <div class="hidden lg:block flex lg:space-x-4">
                 {#each menuItems as item}
-                    <a href={item.href} class="btn hover:variant-soft-primary">
+                    <a href={item.href} class="btn hover:preset-tonal-primary">
                         <span><item.icon /></span>
                         <span>{item.name}</span>
                     </a>
