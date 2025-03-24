@@ -60,7 +60,7 @@
     <div class="flex flex-col bg-surface-100-800-token space-y-4 p-3 md:p-4">
         <div class="grid grid-cols-[auto_1fr_auto] gap-2 md:gap-8">
             <!-- The "hamburger" button will not appear on large screens -->
-            <div class="lg:!hidden self-center">
+            <div class="lg:hidden! self-center">
                 <button class="btn-icon btn-icon-sm" onclick={() => drawerStore.open()}>
                     <Menu />
                 </button>
