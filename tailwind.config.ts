@@ -16,15 +16,5 @@ export default {
     plugins: [
         forms,
         typography,
-        skeleton({
-            themes: {
-                preset: [
-                    {
-                        name: 'rocket',
-                        enhancements: true,
-                    },
-                ],
-            },
-        }),
     ],
 } satisfies Config;
