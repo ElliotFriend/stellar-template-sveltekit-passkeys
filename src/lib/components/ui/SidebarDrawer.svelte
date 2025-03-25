@@ -6,7 +6,8 @@
 -->
 
 <script lang="ts">
-    const drawerStore = getDrawerStore();
+    import { Modal } from '@skeletonlabs/skeleton-svelte';
+    let drawerState = $state(false);
 
     // We import the `menuItems` array that is exported from the `<script
     // module>` part of the Header component. This way, we can have the same
@@ -15,26 +16,35 @@
 
     // A very simple function to close the expanded drawer menu when a button in
     // the menu is clicked.
-    function onClickSidebarItem(): void {
-        drawerStore.close();
+    function drawerClose() {
+        drawerState = false;
     }
+
+    import Menu from 'lucide-svelte/icons/menu';
 </script>
 
-<Drawer>
-    <div class="p-4 space-y-4 overflow-y-auto">
-        <nav class="list-nav">
-            <ul>
-                {#each menuItems as item}
-                    <a
-                        href={item.href}
-                        class="btn preset-tonal-surface"
-                        onclick={() => onClickSidebarItem()}
-                    >
-                        <span><item.icon /></span>
-                        <span>{item.name}</span>
-                    </a>
-                {/each}
-            </ul>
+<Modal
+    open={drawerState}
+    onOpenChange={(e) => (drawerState = e.open)}
+    triggerBase="btn-icon hover:preset-tonal"
+    contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
+    positionerJustify="justify-start"
+    positionerAlign=""
+    positionerPadding=""
+    transitionsPositionerIn={{ x: -480, duration: 200 }}
+    transitionsPositionerOut={{ x: -480, duration: 200 }}
+>
+    {#snippet trigger()}
+        <Menu />
+    {/snippet}
+    {#snippet content()}
+        <nav class="flex flex-col gap-2">
+            {#each menuItems as item}
+                <a href={item.href} class="btn preset-tonal-surface" onclick={drawerClose}>
+                    <span><item.icon /></span>
+                    <span>{item.name}</span>
+                </a>
+            {/each}
         </nav>
-    </div>
-</Drawer>
+    {/snippet}
+</Modal>

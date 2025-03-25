@@ -35,7 +35,7 @@ function exe(command) {
  * Generates a new keypair, and funds it if we're not using Mainnet.
  */
 function fundAll() {
-    exe(`stellar keys generate --overwrite --fund ${process.env.STELLAR_ACCOUNT}`);
+    exe(`stellar keys generate ${process.env.STELLAR_ACCOUNT} | true`);
     if (
         process.env.STELLAR_NETWORK_PASSPHRASE !== 'Public Global Stellar Network ; September 2015'
     ) {

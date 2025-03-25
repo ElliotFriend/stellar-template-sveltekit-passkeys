@@ -4,6 +4,6 @@
  documentation, etc. The world is your oyster!
 -->
 
-<footer class="bg-surface-100-900 shadow-xl p-4">
+<footer class="bg-surface-900 border-t-[1px] border-surface-500/20 shadow-xl p-4">
     <div>(footer)</div>
 </footer>
