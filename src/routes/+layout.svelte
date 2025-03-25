@@ -3,7 +3,6 @@
     import { ToastProvider } from '@skeletonlabs/skeleton-svelte';
 
     import Header from '$lib/components/ui/Header.svelte';
-    import SidebarDrawer from '$lib/components/ui/SidebarDrawer.svelte';
     import PageContent from '$lib/components/ui/PageContent.svelte';
     import Footer from '$lib/components/ui/Footer.svelte';
 
