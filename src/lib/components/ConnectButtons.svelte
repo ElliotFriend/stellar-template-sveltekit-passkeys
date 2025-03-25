@@ -37,6 +37,7 @@
             toast.create({
                 title: 'Error',
                 description: 'Something went wrong signing up. Please try again later.',
+                type: 'error'
             });
         }
     }
@@ -53,6 +54,7 @@
             toast.create({
                 title: 'Error',
                 description: 'Something went wrong logging in. Please try again later.',
+                type: 'error'
             });
         }
     }
@@ -69,6 +71,7 @@
             toast.create({
                 title: 'Error',
                 description: 'Something went wrong logging out. Please try again later.',
+                type: 'error'
             });
         }
     }
