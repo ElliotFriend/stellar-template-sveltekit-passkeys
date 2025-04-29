@@ -20,10 +20,7 @@
 <script lang="ts">
     // We're using toasts to display errors to the user. We're not doing much
     // error _handling_, though. So, use whatever techniques you see fit.
-    // const toastStore = getToastStore();
-    import { getContext } from 'svelte';
-    import { type ToastContext } from '@skeletonlabs/skeleton-svelte';
-    let toast: ToastContext = getContext('toast');
+    import { toaster } from '$lib/toaster';
 
     /**
      * Sign up as a new user, creating a smart wallet along the way.
@@ -34,10 +31,9 @@
             // Implement the signup logic here
         } catch (err) {
             console.error(err);
-            toast.create({
+            toaster.error({
                 title: 'Error',
                 description: 'Something went wrong signing up. Please try again later.',
-                type: 'error'
             });
         }
     }
@@ -51,10 +47,9 @@
             // Implement the login logic here
         } catch (err) {
             console.error(err);
-            toast.create({
+            toaster.error({
                 title: 'Error',
                 description: 'Something went wrong logging in. Please try again later.',
-                type: 'error'
             });
         }
     }
@@ -68,10 +63,9 @@
             // Implement the logout logic here
         } catch (err) {
             console.error(err);
-            toast.create({
+            toaster.error({
                 title: 'Error',
                 description: 'Something went wrong logging out. Please try again later.',
-                type: 'error'
             });
         }
     }
