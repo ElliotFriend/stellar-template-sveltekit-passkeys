@@ -19,7 +19,7 @@
     /**
      * Change these menu items to fit whatever your use-case is.
      */
-    export const menuItems = [
+    export const menuItems: {name: string; href: string; icon: typeof IconType}[] = [
         {
             name: 'Apple',
             href: '#',
@@ -47,9 +47,10 @@
     // We import the Icons in this manner to give us faster build and load
     // times. So says the [Lucide Svelte
     // docs](https://lucide.dev/guide/packages/lucide-svelte#example), at least.
-    import Apple from 'lucide-svelte/icons/apple';
-    import Book from 'lucide-svelte/icons/book';
-    import Castle from 'lucide-svelte/icons/castle';
+    import Apple from '@lucide/svelte/icons/apple';
+    import Book from '@lucide/svelte/icons/book';
+    import Castle from '@lucide/svelte/icons/castle';
+    import { Icon as IconType } from '@lucide/svelte';
 
     import ConnectButtons from '$lib/components/ConnectButtons.svelte';
     import SidebarDrawer from './SidebarDrawer.svelte';
@@ -70,8 +71,9 @@
             <!-- The "topnav" buttons will not appear on medium or smaller screens -->
             <div class="hidden lg:block flex lg:space-x-4">
                 {#each menuItems as item}
+                    {@const Icon = item.icon}
                     <a href={item.href} class="btn hover:preset-tonal">
-                        <span><item.icon /></span>
+                        <span><Icon /></span>
                         <span>{item.name}</span>
                     </a>
                 {/each}

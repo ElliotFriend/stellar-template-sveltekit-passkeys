@@ -20,7 +20,7 @@
         drawerState = false;
     }
 
-    import Menu from 'lucide-svelte/icons/menu';
+    import Menu from '@lucide/svelte/icons/menu';
 </script>
 
 <Modal
