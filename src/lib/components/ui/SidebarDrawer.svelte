@@ -40,8 +40,9 @@
     {#snippet content()}
         <nav class="flex flex-col gap-2">
             {#each menuItems as item}
+                {@const Icon = item.icon}
                 <a href={item.href} class="btn preset-tonal-surface" onclick={drawerClose}>
-                    <span><item.icon /></span>
+                    <span><Icon /></span>
                     <span>{item.name}</span>
                 </a>
             {/each}
