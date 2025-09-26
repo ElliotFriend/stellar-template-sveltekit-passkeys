@@ -10,7 +10,7 @@
  - The `$lib/components/ConnectButtons.svelte` component
 -->
 
-<script module>
+<script module lang="ts">
     // We're using `<script module>` here because the menu items are not in need
     // of reactivity, and this will allow us to export and then import the same
     // items into the sidebar (for smaller screens) without having to redefine
@@ -19,7 +19,7 @@
     /**
      * Change these menu items to fit whatever your use-case is.
      */
-    export const menuItems: {name: string; href: string; icon: typeof IconType}[] = [
+    export const menuItems: { name: string; href: string; icon: typeof IconType }[] = [
         {
             name: 'Apple',
             href: '#',
