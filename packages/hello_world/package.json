@@ -5,13 +5,14 @@
     "exports": "./dist/index.js",
     "typings": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "prepare": "tsc"
     },
     "dependencies": {
-        "@stellar/stellar-sdk": "^14.2.0",
-        "buffer": "^6.0.3"
+        "@stellar/stellar-sdk": "^16.3.0",
+        "buffer": "6.0.3"
     },
     "devDependencies": {
-        "typescript": "^5.9.2"
+        "typescript": "^6.0.3"
     }
 }

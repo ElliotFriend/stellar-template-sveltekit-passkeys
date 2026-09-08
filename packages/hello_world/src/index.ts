@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
 export const networks = {
     testnet: {
         networkPassphrase: 'Test SDF Network ; September 2015',
-        contractId: 'CBFGR5IAGMEP6MQ7UUDCHUU42BM2OL4GGEZC2HMWWVCK22IHESEXU2Z6',
+        contractId: 'CCCHAXWVST3RV2LA6HIHBSJA6ABTFMPACRCNFG3NWGSIRJNKFDFKFTPS',
     },
 } as const;
 
@@ -25,22 +25,7 @@ export interface Client {
      */
     hello: (
         { to }: { to: string },
-        options?: {
-            /**
-             * The fee to pay for the transaction. Default: BASE_FEE
-             */
-            fee?: number;
-
-            /**
-             * The maximum amount of time to wait for the transaction to complete. Default: DEFAULT_TIMEOUT
-             */
-            timeoutInSeconds?: number;
-
-            /**
-             * Whether to automatically simulate the transaction when constructing the AssembledTransaction. Default: true
-             */
-            simulate?: boolean;
-        },
+        options?: MethodOptions,
     ) => Promise<AssembledTransaction<Array<string>>>;
 }
 export class Client extends ContractClient {
