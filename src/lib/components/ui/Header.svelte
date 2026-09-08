@@ -7,7 +7,7 @@
  - The "hamburger" button to expand the nav menu, only on small screens
  - The site title
  - Some menu buttons
- - The `$lib/components/ConnectButtons.svelte` component
+ - The `$lib/components/ConnectButtons/ConnectButtons.svelte` component
 -->
 
 <script module lang="ts">
@@ -16,66 +16,69 @@
     // items into the sidebar (for smaller screens) without having to redefine
     // the same items.
 
+    export interface IMenuItem {
+        name: string;
+        href: '/';
+        icon: LucideIcon;
+    }
+
     /**
-     * Change these menu items to fit whatever your use-case is.
+     * Change these menu items to fit whatever your use-case is. The `href`
+     * union type above keeps `resolve()` happy: add your routes to it as you
+     * create them.
      */
-    export const menuItems: { name: string; href: string; icon: typeof IconType }[] = [
+    export const menuItems: IMenuItem[] = [
         {
             name: 'Apple',
-            href: '#',
+            href: '/',
             icon: Apple,
         },
         {
             name: 'Book',
-            href: '#',
+            href: '/',
             icon: Book,
         },
         {
             name: 'Castle',
-            href: '#',
+            href: '/',
             icon: Castle,
         },
     ];
+
+    export const dappTitle = 'Dapp Title';
 </script>
 
 <script lang="ts">
-    // The "Drawer" is the way Skeleton describes the responsive menu that can
-    // appear on the side of the page for smaller screens (when the header
-    // "hamburger button" is clicked).
-    // const drawerStore = getDrawerStore();
-
     // We import the Icons in this manner to give us faster build and load
     // times. So says the [Lucide Svelte
     // docs](https://lucide.dev/guide/packages/lucide-svelte#example), at least.
     import Apple from '@lucide/svelte/icons/apple';
     import Book from '@lucide/svelte/icons/book';
     import Castle from '@lucide/svelte/icons/castle';
-    import { Icon as IconType } from '@lucide/svelte';
+    import type { LucideIcon } from '@lucide/svelte';
+    import { resolve } from '$app/paths';
 
-    import ConnectButtons from '$lib/components/ConnectButtons.svelte';
-    import SidebarDrawer from './SidebarDrawer.svelte';
+    import NavbarButton from '$lib/components/ui/NavbarButton.svelte';
+    import ConnectButtons from '$lib/components/ConnectButtons/ConnectButtons.svelte';
+    import SidebarDrawer from '$lib/components/ui/SidebarDrawer.svelte';
 </script>
 
-<header class="bg-surface-900 border-b-[1px] border-surface-500/20 flex-none shadow-xl z-5">
-    <div class="flex flex-col space-y-4 p-3 md:p-4">
+<header class="flex-none shadow-xl">
+    <div class="flex flex-col bg-surface-100-900 space-y-4 p-3 md:p-4">
         <div class="grid grid-cols-[auto_1fr_auto] gap-2 md:gap-8">
             <!-- The "hamburger" button will not appear on large screens -->
-            <div class="lg:hidden! self-center">
+            <div class="md:hidden! self-center">
                 <SidebarDrawer />
             </div>
             <div class="flex-none flex items-center">
-                <a href="/" title="Dapp homepage">
-                    <span class="text-lg md:text-xl"> Dapp Title </span>
+                <a href={resolve('/')} title="Dapp homepage">
+                    <span class="text-lg md:text-xl">{dappTitle}</span>
                 </a>
             </div>
-            <!-- The "topnav" buttons will not appear on medium or smaller screens -->
-            <div class="hidden lg:block flex lg:space-x-4">
-                {#each menuItems as item}
-                    {@const Icon = item.icon}
-                    <a href={item.href} class="btn hover:preset-tonal">
-                        <span><Icon /></span>
-                        <span>{item.name}</span>
-                    </a>
+            <!-- The "topnav" buttons will not appear on small screens -->
+            <div class="hidden md:block flex space-x-1 md:space-x-4">
+                {#each menuItems as item (item.name)}
+                    <NavbarButton {item} />
                 {/each}
             </div>
             <!-- The login/logout/signup buttons will always appear in the header -->

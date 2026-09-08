@@ -19,7 +19,7 @@
         <main id="page-content" class="flex-auto">
             <div class="flex items-start gap-10 relative p-10">
                 <div class="mx-auto w-full max-w-4xl space-y-4">
-                    {@render children()}
+                    {@render children?.()}
                 </div>
             </div>
         </main>

@@ -1,38 +1,36 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/forms';
 
 @import '@skeletonlabs/skeleton';
-@import '@skeletonlabs/skeleton/optional/presets';
 @import '@skeletonlabs/skeleton/themes/rocket';
-
-@source "../node_modules/@skeletonlabs/skeleton-svelte/dist";
-
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@import '@skeletonlabs/skeleton-svelte';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
-}
-
-@layer utilities {
-}
-
 /* rocket theme */
+[data-theme='rocket'] main {
+    background-image:
+        radial-gradient(
+            at 0% 0%,
+            color-mix(in oklab, var(--color-primary-500) 33%, transparent) 0px,
+            transparent 30%
+        ),
+        radial-gradient(
+            at 45% 10%,
+            color-mix(in oklab, var(--color-success-500) 8%, transparent) 0px,
+            transparent 45%
+        ),
+        radial-gradient(
+            at 100% 0%,
+            color-mix(in oklab, var(--color-error-500) 33%, transparent) 0px,
+            transparent 25%
+        );
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 @font-face {
     font-family: 'Space Grotesk';
     src: url('/fonts/SpaceGrotesk.ttf');

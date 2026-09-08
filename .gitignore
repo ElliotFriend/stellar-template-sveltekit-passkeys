@@ -1,8 +1,15 @@
-# SvelteKit things
+# Rust's output directory
+target
+
+# Local Soroban settings
+.soroban
+.stellar
+
 .DS_Store
 node_modules
 /build
 /.svelte-kit
+/.vercel
 /package
 .env
 .env.*
@@ -10,7 +17,6 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Stellar/Soroban things
-target
-.soroban
-.stellar
+# Test runner output
+/test-results
+/playwright-report
