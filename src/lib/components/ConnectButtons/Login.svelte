@@ -1,0 +1,37 @@
+<!--
+ @component
+ Log in as an existing user, connecting to a pre-existing smart account.
+-->
+
+<script lang="ts">
+    import { account, userDismissedPasskey } from '$lib/smartAccountClient';
+    import { wallet } from '$lib/state/UserState.svelte';
+    import { toaster } from '$lib/toaster';
+
+    async function login() {
+        console.log('logging in');
+        try {
+            // `prompt: true` asks the user's authenticator to pick a passkey;
+            // SmartAccountKit uses the selected credential to look up the
+            // matching smart account contract via its IndexedDB index.
+            await account.connectWallet({ prompt: true });
+            console.log('[login] contractAddress', wallet.contractAddress);
+        } catch (err: unknown) {
+            if (userDismissedPasskey(err)) {
+                toaster.warning({
+                    title: 'Cancelled',
+                    description: 'Passkey prompt dismissed.',
+                });
+                return;
+            }
+
+            console.error('[login]', err);
+            toaster.error({
+                title: 'Error',
+                description: 'Something went wrong logging in. Please try again later.',
+            });
+        }
+    }
+</script>
+
+<button class="btn preset-tonal-primary" onclick={login}>Login</button>
