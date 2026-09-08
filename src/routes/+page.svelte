@@ -11,7 +11,7 @@
         <p>Start by exploring:</p>
         <ul>
             <li><code class="code">/src/routes/+layout.svelte</code> - barebones layout</li>
-            <li><code class="code">/src/app.postcss</code> - app wide css</li>
+            <li><code class="code">/src/app.css</code> - app wide css</li>
             <li>
                 <code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents
             </li>
@@ -22,6 +22,18 @@
                 >
                 that is run when this page is requested, returning its data to this page's
                 <code class="code">data</code> prop
+            </li>
+            <li>
+                <code class="code">/src/lib/smartAccountClient.ts</code> - the
+                <a
+                    class="anchor"
+                    href="https://github.com/stellar/smart-account-kit"
+                    target="_blank">Smart Account Kit</a
+                > client the signup/login buttons talk to
+            </li>
+            <li>
+                <code class="code">/src/routes/api/send/+server.ts</code> - a server route that forwards
+                signed transactions to the relayer, keeping its API key off the client
             </li>
         </ul>
     </div>
