@@ -179,7 +179,7 @@ function importContract({ alias }) {
 
     // the required imports/exports for the library
     const importContent =
-        `import { Client, networks } as Client from '${alias}';\n` +
+        `import { Client, networks } from '${alias}';\n` +
         `import { PUBLIC_STELLAR_RPC_URL } from '$env/static/public';\n\n` +
         `export default new Client({\n` +
         `    ...networks.${process.env.STELLAR_NETWORK},\n` +
