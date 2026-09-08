@@ -20,6 +20,9 @@ console.log('###################### Initializing ########################');
 const __filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(__filename);
 
+// Rust targets the Stellar CLI may have built our contracts into
+const WASM_TARGETS = ['wasm32v1-none', 'wasm32-unknown-unknown'];
+
 /**
  * This function logs and then executes a shell command.
  * @param {string} command shell command to run
@@ -29,6 +32,20 @@ function exe(command) {
     console.log(command);
     // execute the command, waiting for it to return before moving on
     execSync(command, { stdio: 'inherit' });
+}
+
+/**
+ * Logs and executes a shell command, returning its standard output. The
+ * command's standard error still streams to our own, so the Stellar CLI's
+ * progress messages stay visible.
+ * @param {string} command shell command to run
+ * @returns {string} the command's trimmed standard output
+ */
+function exeCapture(command) {
+    console.log(command);
+    return execSync(command, { stdio: ['inherit', 'pipe', 'inherit'] })
+        .toString()
+        .trim();
 }
 
 /**
@@ -55,11 +72,23 @@ function removeFiles(pattern) {
 }
 
 /**
+ * Finds every compiled Wasm file in the project. The Stellar CLI builds to
+ * `wasm32v1-none` these days, but older versions used
+ * `wasm32-unknown-unknown`, so we look in both places.
+ * @returns {string[]} paths to the compiled Wasm files
+ */
+function wasmFiles() {
+    return WASM_TARGETS.flatMap((target) => glob(`${dirname}/target/${target}/release/*.wasm`));
+}
+
+/**
  * Removes old contract builds, and re-builds smart contracts.
  */
 function buildAll() {
-    removeFiles(`${dirname}/target/wasm32-unknown-unknown/release/*.wasm`);
-    removeFiles(`${dirname}/target/wasm32-unknown-unknown/release/*.d`);
+    for (const target of WASM_TARGETS) {
+        removeFiles(`${dirname}/target/${target}/release/*.wasm`);
+        removeFiles(`${dirname}/target/${target}/release/*.d`);
+    }
     exe(`stellar contract build`);
 }
 
@@ -74,56 +103,28 @@ function filenameNoExtension(filename) {
 }
 
 /**
- * Deploy a contract's Wasm file to the network
+ * Deploy a contract's Wasm file to the network. The Stellar CLI prints the
+ * deployed contract address on standard out, which is where we get it from:
+ * where the CLI stores its aliases has moved around between versions.
  * @param {string} wasm path to the compiled Wasm file
+ * @returns {{ alias: string, id: string }} the contract's alias and address
  */
 function deploy(wasm) {
-    exe(
-        `stellar contract deploy --wasm ${wasm} --ignore-checks --alias ${filenameNoExtension(wasm)}`,
+    const alias = filenameNoExtension(wasm);
+    const id = exeCapture(
+        `stellar contract deploy --wasm ${wasm} --ignore-checks --alias ${alias}`,
     );
+
+    return { alias, id };
 }
 
 /**
  * Iterate through all compiled Wasm files in the project, and deploy them to
  * the network.
+ * @returns {{ alias: string, id: string }[]} the deployed contracts
  */
 function deployAll() {
-    // make sure a directory is ready to store our deployed contract information
-    const contractsDir = `${dirname}/.stellar/contract-ids`;
-    mkdirSync(contractsDir, { recursive: true });
-
-    // search for all compiled Wasm files
-    const wasmFiles = glob(`${dirname}/target/wasm32-unknown-unknown/release/*.wasm`);
-
-    // run the `deploy()` function for each compiled Wasm file found
-    wasmFiles.forEach(deploy);
-}
-
-/**
- * Iterate through all deployed contracts, creating an array of objects with
- * each contract's `alias` (its filename) and `address` (deployed on the
- * network).
- * @returns {{ alias: string, address: string }[]} array of objects with aliases and addresses
- */
-function contracts() {
-    // search for all deployed contracts
-    const contractFiles = glob(`${dirname}/.stellar/contract-ids/*.json`);
-
-    return (
-        contractFiles
-            // start by mapping the found files, adding an alias to the object
-            .map((path) => ({
-                alias: filenameNoExtension(path),
-                ...JSON.parse(readFileSync(path)),
-            }))
-            // only grab contracts for the network we want
-            .filter((data) => data.ids[process.env.STELLAR_NETWORK_PASSPHRASE])
-            // add the contract address to the return object
-            .map((data) => ({
-                alias: data.alias,
-                id: data.ids[process.env.STELLAR_NETWORK_PASSPHRASE],
-            }))
-    );
+    return wasmFiles().map(deploy);
 }
 
 /**
@@ -132,19 +133,38 @@ function contracts() {
  * @param {{alias: string, id: string}} contract the contract to generate bindings for
  */
 function bind({ alias, id }) {
-    exe(
-        `stellar contract bindings typescript --id ${id} --output-dir ${dirname}/packages/${alias} --overwrite`,
-    );
+    const packageDir = `${dirname}/packages/${alias}`;
 
-    exe(`cd packages/${alias} && pnpm install && pnpm run build && cd ../..`);
+    exe(`stellar contract bindings typescript --id ${id} --output-dir ${packageDir} --overwrite`);
+
+    // The generated package.json only defines `build`. Adding `prepare` lets
+    // pnpm compile the bindings automatically whenever someone installs the
+    // workspace, so `dist/` never has to be committed.
+    const manifestPath = `${packageDir}/package.json`;
+    const manifest = JSON.parse(readFileSync(manifestPath));
+    manifest.scripts = { ...manifest.scripts, prepare: 'tsc' };
+    writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 4)}\n`);
+
+    // Since the bindings are compiled on install, the compiled output doesn't
+    // belong in version control either.
+    const ignorePath = `${packageDir}/.gitignore`;
+    const ignored = readFileSync(ignorePath, 'utf8');
+    if (!ignored.split('\n').includes('dist/')) {
+        writeFileSync(ignorePath, `${ignored.trimEnd()}\ndist/\n`);
+    }
+
+    // The CLI writes a standalone package, but inside a workspace the root
+    // lockfile is the only one that matters.
+    rmSync(`${packageDir}/pnpm-lock.yaml`, { force: true });
 }
 
 /**
  * Iterate through all deployed contracts and run the `bind()` function for
  * each one.
+ * @param {{ alias: string, id: string }[]} contracts the deployed contracts
  */
-function bindAll() {
-    contracts().forEach(bind);
+function bindAll(contracts) {
+    contracts.forEach(bind);
 }
 
 /**
@@ -159,10 +179,10 @@ function importContract({ alias }) {
 
     // the required imports/exports for the library
     const importContent =
-        `import * as Client from '${alias}';\n` +
+        `import { Client, networks } as Client from '${alias}';\n` +
         `import { PUBLIC_STELLAR_RPC_URL } from '$env/static/public';\n\n` +
-        `export default new Client.Client({\n` +
-        `    ...Client.networks.${process.env.STELLAR_NETWORK},\n` +
+        `export default new Client({\n` +
+        `    ...networks.${process.env.STELLAR_NETWORK},\n` +
         `    rpcUrl: PUBLIC_STELLAR_RPC_URL,\n` +
         `});\n`;
 
@@ -177,9 +197,10 @@ function importContract({ alias }) {
 /**
  * Iterate through all deployed contracts and run the `importContract()`
  * function for each one.
+ * @param {{ alias: string }[]} contracts the deployed contracts
  */
-function importAll() {
-    contracts().forEach(importContract);
+function importAll(contracts) {
+    contracts.forEach(importContract);
 }
 
 /* Now, we call the functions we've written in the order we want them to happen: */
@@ -188,8 +209,8 @@ fundAll();
 // 2. compile and build contracts
 buildAll();
 // 3. deploy all built contracts
-deployAll();
+const deployed = deployAll();
 // 4. generate bindings for all deployed contracts
-bindAll();
+bindAll(deployed);
 // 5. create a library file importing each bindings package into the frontend
-importAll();
+importAll(deployed);
