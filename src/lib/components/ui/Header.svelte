@@ -76,7 +76,7 @@
                 </a>
             </div>
             <!-- The "topnav" buttons will not appear on small screens -->
-            <div class="hidden md:block flex space-x-1 md:space-x-4">
+            <div class="hidden md:flex gap-1 md:gap-4">
                 {#each menuItems as item (item.name)}
                     <NavbarButton {item} />
                 {/each}
