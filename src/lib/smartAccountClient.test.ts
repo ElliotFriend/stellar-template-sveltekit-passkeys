@@ -1,3 +1,6 @@
+// Unit tests for the helpers in `smartAccountClient.ts`. Pure functions like
+// these are easy to test without a browser, a passkey, or the network. Run
+// them with `pnpm test:unit`.
 import { describe, it, expect } from 'vitest';
 import { userDismissedPasskey } from '#lib/smartAccountClient.ts';
 
