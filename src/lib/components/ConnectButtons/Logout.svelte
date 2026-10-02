@@ -8,8 +8,8 @@
 <script lang="ts">
     import LogOut from '@lucide/svelte/icons/log-out';
 
-    import { account } from '$lib/smartAccountClient';
-    import { toaster } from '$lib/toaster';
+    import { account } from '#lib/smartAccountClient.js';
+    import { toaster } from '#lib/toaster.js';
 
     async function logout() {
         console.log('logging out');

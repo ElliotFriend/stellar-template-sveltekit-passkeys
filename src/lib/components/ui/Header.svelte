@@ -7,7 +7,7 @@
  - The "hamburger" button to expand the nav menu, only on small screens
  - The site title
  - Some menu buttons
- - The `$lib/components/ConnectButtons/ConnectButtons.svelte` component
+ - The `#lib/components/ConnectButtons/ConnectButtons.svelte` component
 -->
 
 <script module lang="ts">
@@ -58,9 +58,9 @@
     import type { LucideIcon } from '@lucide/svelte';
     import { resolve } from '$app/paths';
 
-    import NavbarButton from '$lib/components/ui/NavbarButton.svelte';
-    import ConnectButtons from '$lib/components/ConnectButtons/ConnectButtons.svelte';
-    import SidebarDrawer from '$lib/components/ui/SidebarDrawer.svelte';
+    import NavbarButton from '#lib/components/ui/NavbarButton.svelte';
+    import ConnectButtons from '#lib/components/ConnectButtons/ConnectButtons.svelte';
+    import SidebarDrawer from '#lib/components/ui/SidebarDrawer.svelte';
 </script>
 
 <header class="flex-none shadow-xl">

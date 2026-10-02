@@ -144,7 +144,7 @@ function bind({ alias, id }) {
     // to date" and skips lifecycle scripts, which is why the root `bindings`
     // script, not this, is what guarantees `dist/` exists before a build.
     const manifestPath = `${packageDir}/package.json`;
-    const manifest = JSON.parse(readFileSync(manifestPath));
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
     manifest.scripts = { ...manifest.scripts, prepare: 'tsc' };
     writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 4)}\n`);
 
@@ -183,7 +183,7 @@ function importContract({ alias }) {
     // the required imports/exports for the library
     const importContent =
         `import { Client, networks } from '${alias}';\n` +
-        `import { PUBLIC_STELLAR_RPC_URL } from '$env/static/public';\n\n` +
+        `import { PUBLIC_STELLAR_RPC_URL } from '$app/env/public';\n\n` +
         `export default new Client({\n` +
         `    ...networks.${process.env.STELLAR_NETWORK},\n` +
         `    rpcUrl: PUBLIC_STELLAR_RPC_URL,\n` +

@@ -9,10 +9,10 @@
     import { Dialog, Portal } from '@skeletonlabs/skeleton-svelte';
     import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 
-    import { toaster } from '$lib/toaster';
-    import { account, userDismissedPasskey } from '$lib/smartAccountClient';
-    import { wallet } from '$lib/state/UserState.svelte';
-    import { PUBLIC_NATIVE_TOKEN_CONTRACT } from '$env/static/public';
+    import { toaster } from '#lib/toaster.js';
+    import { account, userDismissedPasskey } from '#lib/smartAccountClient.js';
+    import { wallet } from '#lib/state/UserState.svelte.js';
+    import { PUBLIC_NATIVE_TOKEN_CONTRACT } from '$app/env/public';
 
     let username: string = $state('');
     let isSigningUp: boolean = $state(false);

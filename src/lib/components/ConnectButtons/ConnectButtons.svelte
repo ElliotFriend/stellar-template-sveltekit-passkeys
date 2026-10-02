@@ -2,19 +2,19 @@
  @component
  This component holds the buttons and logic for our signup/login/logout
  functionality. It's imported and used in the
- `$lib/components/ui/Header.svelte` component, which in turn is placed on the
+ `#lib/components/ui/Header.svelte` component, which in turn is placed on the
  page in the `/src/routes/+layout.svelte` file.
 
  Each button lives in its own file alongside this one. They all talk to the
- `account` exported from `$lib/smartAccountClient`, and read the connected
- contract address from the `wallet` state in `$lib/state/UserState.svelte`.
+ `account` exported from `#lib/smartAccountClient.js`, and read the connected
+ contract address from the `wallet` state in `#lib/state/UserState.svelte.js`.
 -->
 
 <script lang="ts">
     import { onMount } from 'svelte';
 
-    import { wallet } from '$lib/state/UserState.svelte';
-    import { account } from '$lib/smartAccountClient';
+    import { wallet } from '#lib/state/UserState.svelte.js';
+    import { account } from '#lib/smartAccountClient.js';
 
     import Signup from './Signup.svelte';
     import Login from './Login.svelte';

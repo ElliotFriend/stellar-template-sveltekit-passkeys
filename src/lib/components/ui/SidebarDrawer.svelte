@@ -14,7 +14,7 @@
     // We import the `menuItems` array that is exported from the `<script
     // module>` part of the Header component. This way, we can have the same
     // menu items on large and small screens without the need to re-define them.
-    import { dappTitle, menuItems } from '$lib/components/ui/Header.svelte';
+    import { dappTitle, menuItems } from '#lib/components/ui/Header.svelte';
 
     const animBackdrop =
         'transition transition-discrete opacity-0 starting:data-[state=open]:opacity-0 data-[state=open]:opacity-100';

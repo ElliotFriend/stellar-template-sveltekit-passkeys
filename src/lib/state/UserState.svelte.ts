@@ -1,4 +1,4 @@
-import { account } from '$lib/smartAccountClient';
+import { account } from '#lib/smartAccountClient.js';
 
 /**
  * A tiny piece of reactive state tracking the connected smart account. The kit

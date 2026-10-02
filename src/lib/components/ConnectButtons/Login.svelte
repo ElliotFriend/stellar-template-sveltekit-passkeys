@@ -8,9 +8,9 @@
         account,
         describeConnectionError,
         userDismissedPasskey,
-    } from '$lib/smartAccountClient';
-    import { wallet } from '$lib/state/UserState.svelte';
-    import { toaster } from '$lib/toaster';
+    } from '#lib/smartAccountClient.js';
+    import { wallet } from '#lib/state/UserState.svelte.js';
+    import { toaster } from '#lib/toaster.js';
 
     async function login() {
         console.log('logging in');
