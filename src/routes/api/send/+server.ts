@@ -28,7 +28,7 @@ import { PRIVATE_RELAYER_BASE_URL, PRIVATE_RELAYER_API_KEY } from '$app/env/priv
  */
 export const POST: RequestHandler = async ({ url, request, fetch }) => {
     // ensure requests are coming from our own frontend
-    if (!request.headers.get('origin')?.includes(url.origin)) {
+    if (request.headers.get('origin') !== url.origin) {
         error(403, 'hostname mismatch');
     }
 
